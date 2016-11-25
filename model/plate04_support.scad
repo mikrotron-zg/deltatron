@@ -4,9 +4,9 @@ use <connector_plate.scad>;
 
 % translate([0, 0, -3]) cylinder(r=75, h=3);
 union() {
-    translate([-15, 0, 5]) import("RampsBracket.stl");
+    //translate([-15, 0, 5]) import("RampsBracket.stl");
     translate([20, 35, 0]) rotate([0, 0, 90]) drawPowerPart();
-    translate([-40, 12, 0]) import("KosselBedBracketFSR.stl");
-    translate([0, 12, 0]) import("KosselBedBracketFSR.stl");
-    translate([-20, -50, 0]) rotate([0, 0, 70]) import("KosselBedBracketFSR.stl");
+    translate([-40, 12, 3.5]) import("KosselBedBracketFSR.stl");
+    translate([0, 12, 3.5]) import("KosselBedBracketFSR.stl");
+    translate([-20, -50, 3.5]) rotate([0, 0, 70]) import("KosselBedBracketFSR.stl");
 }

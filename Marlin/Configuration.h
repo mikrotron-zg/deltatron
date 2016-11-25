@@ -75,10 +75,10 @@
 #define DELTA_SEGMENTS_PER_SECOND 160
 
 // Center-to-center distance of the holes in the diagonal push rods.
-#define DELTA_DIAGONAL_ROD 228 // mm WAS 213.5
+#define DELTA_DIAGONAL_ROD 228 // mm
 
 // Horizontal offset from middle of printer to smooth rod center.
-#define DELTA_SMOOTH_ROD_OFFSET 163.33 // mm WAS 143.275
+#define DELTA_SMOOTH_ROD_OFFSET 163.33 // mm
 
 // Horizontal offset of the universal joints on the end effector.
 #define DELTA_EFFECTOR_OFFSET 30.0 // mm
@@ -143,7 +143,7 @@
 // 147 is Pt100 with 4k7 pullup
 // 110 is Pt100 with 1k pullup (non standard)
 
-#define TEMP_SENSOR_0 1
+#define TEMP_SENSOR_0 6
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_BED 0
@@ -198,9 +198,9 @@
 
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 // Deltatron
-    #define  DEFAULT_Kp 19.24
-    #define  DEFAULT_Ki 1.09
-    #define  DEFAULT_Kd 85
+    #define  DEFAULT_Kp 25.93
+    #define  DEFAULT_Ki 1.86
+    #define  DEFAULT_Kd 90
 
 // Ultimaker
 //    #define  DEFAULT_Kp 22.2
@@ -448,9 +448,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   #endif // AUTO_BED_LEVELING_GRID
 
   // these are the offsets to the probe relative to the extruder tip (Hotend - Probe)
-  #define X_PROBE_OFFSET_FROM_EXTRUDER 12.5
-  #define Y_PROBE_OFFSET_FROM_EXTRUDER 8.1
-  #define Z_PROBE_OFFSET_FROM_EXTRUDER -3.7  //Increase this if the first layer is too thin.
+  #define X_PROBE_OFFSET_FROM_EXTRUDER 11.5 
+  #define Y_PROBE_OFFSET_FROM_EXTRUDER -6.0 
+  #define Z_PROBE_OFFSET_FROM_EXTRUDER -4.4  //Increase this if the first layer is too thin.
 
   #define Z_RAISE_BEFORE_HOMING 4       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
