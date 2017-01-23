@@ -1,4 +1,4 @@
-# deltatron
+# Deltatron
 Deltatron is Kossel Mini RepRap 3D Printer variant by [DIYkits.eu](http://www.diykits.eu/)
 
 This repository includes all 3D printable parts, Marlin firmware ready for upload, and last but not least - assembly and user manuals (the second one is still work in progress) in Croatian and (evetually) in English.
