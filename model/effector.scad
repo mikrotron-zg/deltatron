@@ -3,8 +3,8 @@ include <configuration.scad>;
 separation = 40;  // Distance between ball joint mounting faces.
 offset = 20;  // Same as DELTA_EFFECTOR_OFFSET in Marlin.
 mount_radius = 12.5;  // Hotend mounting screws, standard would be 25mm.
-hotend_radius = 8;  // Hole for the hotend (J-Head diameter is 16mm).
-push_fit_height = 4;  // Length of brass threaded into printed plastic.
+hotend_radius = 8.1;  //WAS 8 Hole for the hotend (J-Head diameter is 16mm).
+push_fit_height = 5.5;  //WAS 4 Length of brass threaded into printed plastic.
 height = 8;
 cone_r1 = 2.5;
 cone_r2 = 14;
@@ -36,8 +36,7 @@ module effector() {
     translate([0, 0, push_fit_height-height/2])
       cylinder(r=hotend_radius, h=height, $fn=36);
     //translate([0, 0, -6]) # import("m5_internal.stl");
-    //Mikrotron MiniKossel mod
-    translate([0, 0, -6]) cylinder(r=6, h=height, $fn=36); 
+    translate([0, 0, -6]) cylinder(r=2.2, h=height, $fn=36); //Deltatron E3D update
     for (a = [0:60:359]) rotate([0, 0, a]) {
       translate([0, mount_radius, 0])
 	cylinder(r=m3_wide_radius, h=2*height, center=true, $fn=12);
