@@ -8,20 +8,78 @@ fan_mount_hole_dia = 3.4; // diameter of corner mount holes
 fan_mount_hole_offset = 3.9; // distance from center of mounthole to fan edge
 fan_diameter = 38.2; 
 
+rounding_radius = 3; // corner rounding radius
+base_mount_height = 10; // fan mount base height
+base_chamber_height = base_mount_height - 2; 
 
+fan_duct_wall = 1;
+fan_duct_width = fan_dimension/3;
+fan_duct_height = base_chamber_height/2;
+
+dr = sqrt(2*pow(fan_dimension/2, 2)) -sqrt(2*pow(fan_mount_hole_offset, 2)); // delta radius for corner mounting holes
 ex = 0.01; // auxiliary variable
 
-//part_cooling_fan_mount();
-fan(); // TODO: print fan and confirm
+part_cooling_fan_mount();
+translate([0, 0, -fan_height]) %fan();
 
 module part_cooling_fan_mount(){
-    
+    difference(){
+        base_mount();
+        fan_duct_intake();
+    }
+    translate([0, fan_dimension/2 - fan_duct_width/2, base_chamber_height]) fan_duct();
+}
+
+module base_mount(){
+     difference(){
+        rounded_rect(fan_dimension, fan_dimension, base_mount_height, rounding_radius);
+        // centered parts
+        translate([fan_dimension/2, fan_dimension/2, -ex]){
+            for (i = [45 : 90 : 315]) {
+                translate([dr*sin(i), dr*cos(i), 0]){
+                    // add M3 mount hole
+                    cylinder(d = fan_mount_hole_dia, h = base_mount_height + 2*ex, $fn=30);
+                    // add M3 nut trap
+                    translate([0, 0, base_mount_height - 2])
+                        cylinder(r=5.5 / 2 / cos(180 / 6) + 0.05, h=2 + 2*ex, $fn=6);
+                }
+            }
+            cylinder(d = fan_diameter, h = base_chamber_height, $fn = 100);
+        } // end of centered parts
+        
+     } //difference
+     translate([fan_dimension/2, fan_dimension/2, -ex])
+        cylinder_chamfer(fan_diameter/2,base_chamber_height,rs=20);
+}
+
+module fan_duct_intake(){
+    translate([-ex, fan_dimension/2, base_chamber_height/2])
+        cube([fan_dimension/4, fan_duct_width - 2*fan_duct_wall, fan_duct_height - 2*fan_duct_wall], center=true);
+}
+
+module fan_duct(){
+    difference() {
+        rotate([0, 180, 0]) difference() {
+            qcylinder(3/4*base_chamber_height, fan_duct_width);
+            translate([0, -ex, -ex])
+            qcylinder(3/4*base_chamber_height - fan_duct_height, fan_duct_width + 2*ex);
+        }
+        translate([0, fan_duct_wall, ex]) rotate([0, 180, 0]) difference() {
+            qcylinder(3/4*base_chamber_height - fan_duct_wall, fan_duct_width - 2* fan_duct_wall);
+            translate([0, -ex, 0])
+            qcylinder(3/4*base_chamber_height - fan_duct_height + fan_duct_wall, fan_duct_width + 2*ex);
+        }
+    }
+    translate([-3/4*base_chamber_height, 0, 0]) difference(){
+        cube([fan_duct_height, fan_duct_width, 2]);
+        translate([fan_duct_wall, fan_duct_wall, -ex]) 
+            cube([fan_duct_height - 2*fan_duct_wall, fan_duct_width - 2*fan_duct_wall, 2 + 2*ex]);
+    }
 }
 
 module fan(){
-    dr = sqrt(2*pow(fan_dimension/2, 2)) -sqrt(2*pow(fan_mount_hole_offset, 2));
     difference(){
-        rounded_rect(fan_dimension, fan_dimension, fan_height, 3);
+        rounded_rect(fan_dimension, fan_dimension, fan_height, rounding_radius);
         translate([fan_dimension/2, fan_dimension/2, -ex]){
             cylinder(d = fan_diameter, h = fan_height + 2*ex, $fn=60);
                for (i = [45 : 90 : 315]) {
@@ -42,4 +100,14 @@ module rounded_rect(x, y, z, radius) {
 			square([x-2*radius,y-2*radius]); //keep outer dimensions given by x and y
 			circle(r = radius, $fn=100);
 		}
+}
+
+//draws quarter of cylinder
+module qcylinder(r_cyl = 3, l_cyl = 20){
+    rotate([90, 0, 0]) translate([0, 0, -l_cyl])
+    difference(){
+        cylinder(r = r_cyl, h = l_cyl, $fn = 100);
+        translate([-r_cyl, -r_cyl, -ex]) cube([r_cyl, 2*r_cyl, l_cyl + 2*ex]);
+        translate([-ex, -r_cyl, -ex]) cube([r_cyl + 2*ex, r_cyl, l_cyl + 2*ex]);
+    }
 }
