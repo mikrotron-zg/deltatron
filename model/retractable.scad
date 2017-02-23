@@ -48,7 +48,7 @@ module retractable() {
       translate([3, -3, height2/2])
         cube([17, 15, height2], center=true);
       // Feet for vertical M3 screw attachment.
-      translate ([0, 6, 0]) rotate([0, 0, 90]) {
+      translate ([0, 7.5, 0]) rotate([0, 0, 90]) {
         foot();
         scale([1, -1, 1]) foot();
       }
@@ -76,7 +76,7 @@ module retractable() {
     translate([-4, 0, height-2]) rotate([90, 0, 0])
       cylinder(r=1/2, h=40, center=true, $fn=12);
     // Third mount screw hole
-    translate([0, 7, 0])
+    translate([0, 8.5, 0])
       cylinder(r=m3_wide_radius, h=20, center=true, $fn=12);
     // Effector screw heads.
 //    rotate([0, 0, 330]) translate([-3.25, 7, 2])
@@ -99,5 +99,5 @@ module retractable() {
   }
 }
 
-translate([0, 14.5, -4]) % effector();
+translate([0, 16, -4]) % effector();
 translate([0, -5, 0]) retractable();
