@@ -20,14 +20,18 @@ dr = sqrt(2*pow(fan_dimension/2, 2)) -sqrt(2*pow(fan_mount_hole_offset, 2)); // 
 ex = 0.01; // auxiliary variable
 
 part_cooling_fan_mount();
-translate([0, 0, -fan_height]) %fan();
+translate([0, 0, base_mount_height]) %fan();
 
 module part_cooling_fan_mount(){
+    rotate([180,0,0]) translate([0, -fan_dimension, -base_mount_height])
     difference(){
         base_mount();
-        fan_duct_intake();
+        translate([-ex, fan_dimension/2, 0]) cube([15, fan_dimension/2, base_mount_height], center=true);
+//        fan_duct_intake();
     }
-    translate([0, fan_dimension/2 - fan_duct_width/2, base_chamber_height]) fan_duct();
+    fan_duct_2();
+//    translate([0, fan_dimension/2 - fan_duct_width/2, base_chamber_height]) fan_duct();
+    
 }
 
 module base_mount(){
@@ -77,6 +81,16 @@ module fan_duct(){
     }
 }
 
+module fan_duct_2(){
+    translate([-5, fan_dimension/2, base_mount_height/4])
+        cube([10, fan_dimension/2, base_mount_height/2], center=true);
+    translate([-5, 3/4*fan_dimension, base_mount_height]) rotate([90, 180, 0])   
+        chamfer(fan_dimension/2, base_mount_height/2,rs=10);
+    translate([-10, fan_dimension/4 - 1, 0]) cube([10, 1, base_mount_height]);
+    translate([-10, 3*fan_dimension/4, 0]) cube([10, 1, base_mount_height]);
+    translate([-11, fan_dimension/4 - 1, 0]) cube([1, fan_dimension/2 + 2, base_mount_height]);
+}
+
 module fan(){
     difference(){
         rounded_rect(fan_dimension, fan_dimension, fan_height, rounding_radius);
@@ -100,6 +114,14 @@ module rounded_rect(x, y, z, radius) {
 			square([x-2*radius,y-2*radius]); //keep outer dimensions given by x and y
 			circle(r = radius, $fn=100);
 		}
+}
+
+//draws 3-sided rectangular prism
+module prism(l, w, h){
+       polyhedron(
+               points=[[0,0,0], [l,0,0], [l,w,0], [0,w,0], [0,w,h], [l,w,h]],
+               faces=[[0,1,2,3],[5,4,3,2],[0,4,5,1],[0,3,4],[5,2,1]]
+               );
 }
 
 //draws quarter of cylinder
