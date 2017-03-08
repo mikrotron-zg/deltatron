@@ -4,7 +4,7 @@ use <chamfers.scad>;
 
 fan_dimension = 40; // for 40x40 mm fan
 fan_height = 10; // most common, can be 7 or 12 mm
-fan_mount_hole_dia = 3.4; // diameter of corner mount holes
+fan_mount_hole_dia = 3.6; // diameter of corner mount holes
 fan_mount_hole_offset = 3.9; // distance from center of mounthole to fan edge
 fan_diameter = 38.2; 
 
@@ -15,6 +15,13 @@ base_chamber_height = base_mount_height - 2;
 fan_duct_wall = 1;
 fan_duct_width = fan_dimension/3;
 fan_duct_height = base_chamber_height/2;
+
+arm_width = 8;
+arm_length = 33; // how long is horizontal part of arm (when mounted)
+arm_height = 12; // how long is vertical part of arm (when mounted)
+arm_thickness = 6;
+arm_mount_hole_dia = 6.2; // M3 bolt head diameter
+arm_mount_hole_height = 3.2; // M3 bolt hole height
 
 dr = sqrt(2*pow(fan_dimension/2, 2)) -sqrt(2*pow(fan_mount_hole_offset, 2)); // delta radius for corner mounting holes
 ex = 0.01; // auxiliary variable
@@ -27,11 +34,9 @@ module part_cooling_fan_mount(){
     difference(){
         base_mount();
         translate([-ex, fan_dimension/2, 0]) cube([15, fan_dimension/2, base_mount_height], center=true);
-//        fan_duct_intake();
     }
-    fan_duct_2();
-//    translate([0, fan_dimension/2 - fan_duct_width/2, base_chamber_height]) fan_duct();
-    
+    fan_duct();
+    translate([fan_dimension, fan_dimension/2 - arm_width/2, 0]) arm();
 }
 
 module base_mount(){
@@ -56,32 +61,7 @@ module base_mount(){
         cylinder_chamfer(fan_diameter/2,base_chamber_height,rs=20);
 }
 
-module fan_duct_intake(){
-    translate([-ex, fan_dimension/2, base_chamber_height/2])
-        cube([fan_dimension/4, fan_duct_width - 2*fan_duct_wall, fan_duct_height - 2*fan_duct_wall], center=true);
-}
-
 module fan_duct(){
-    difference() {
-        rotate([0, 180, 0]) difference() {
-            qcylinder(3/4*base_chamber_height, fan_duct_width);
-            translate([0, -ex, -ex])
-            qcylinder(3/4*base_chamber_height - fan_duct_height, fan_duct_width + 2*ex);
-        }
-        translate([0, fan_duct_wall, ex]) rotate([0, 180, 0]) difference() {
-            qcylinder(3/4*base_chamber_height - fan_duct_wall, fan_duct_width - 2* fan_duct_wall);
-            translate([0, -ex, 0])
-            qcylinder(3/4*base_chamber_height - fan_duct_height + fan_duct_wall, fan_duct_width + 2*ex);
-        }
-    }
-    translate([-3/4*base_chamber_height, 0, 0]) difference(){
-        cube([fan_duct_height, fan_duct_width, 2]);
-        translate([fan_duct_wall, fan_duct_wall, -ex]) 
-            cube([fan_duct_height - 2*fan_duct_wall, fan_duct_width - 2*fan_duct_wall, 2 + 2*ex]);
-    }
-}
-
-module fan_duct_2(){
     translate([-5, fan_dimension/2, base_mount_height/4])
         cube([10, fan_dimension/2, base_mount_height/2], center=true);
     translate([-5, 3/4*fan_dimension, base_mount_height]) rotate([90, 180, 0])   
@@ -104,6 +84,25 @@ module fan(){
     }
 }
 
+module arm(){
+    // vertical part of arm
+    cube([arm_height, arm_width, arm_thickness]); 
+    rotate([0, 0, 90]) translate([-arm_width, -arm_width, 0])
+        chamfer(arm_thickness, arm_width, rs=20);
+    rotate([0, 0, 180]) translate([-arm_width, -2*arm_width, 0])
+        chamfer(arm_thickness, arm_width, rs=20);
+    // horizontal part of arm
+    translate([arm_height, 0, 0]) difference(){
+        cube([arm_thickness, arm_width, arm_length]);
+        translate([-ex, arm_width/2, arm_length - arm_mount_hole_dia/2 - 2])
+            rotate([0, 90, 0]) cylinder(d=fan_mount_hole_dia, h=arm_thickness + 2*ex, $fn=20);
+        translate([arm_thickness - arm_mount_hole_height, arm_width/2, arm_length - arm_mount_hole_dia/2 - 2])
+            rotate([0, 90, 0]) cylinder(d=arm_mount_hole_dia, h=arm_mount_hole_height + ex, $fn=20);
+    }
+    translate([arm_height - arm_thickness, arm_width, 2*arm_thickness]) rotate([90, 90, 0])
+        chamfer(arm_width, arm_thickness, rs=20);
+}
+
 //UTILITY
 
 //draws a rounded rectangle
@@ -114,22 +113,4 @@ module rounded_rect(x, y, z, radius) {
 			square([x-2*radius,y-2*radius]); //keep outer dimensions given by x and y
 			circle(r = radius, $fn=100);
 		}
-}
-
-//draws 3-sided rectangular prism
-module prism(l, w, h){
-       polyhedron(
-               points=[[0,0,0], [l,0,0], [l,w,0], [0,w,0], [0,w,h], [l,w,h]],
-               faces=[[0,1,2,3],[5,4,3,2],[0,4,5,1],[0,3,4],[5,2,1]]
-               );
-}
-
-//draws quarter of cylinder
-module qcylinder(r_cyl = 3, l_cyl = 20){
-    rotate([90, 0, 0]) translate([0, 0, -l_cyl])
-    difference(){
-        cylinder(r = r_cyl, h = l_cyl, $fn = 100);
-        translate([-r_cyl, -r_cyl, -ex]) cube([r_cyl, 2*r_cyl, l_cyl + 2*ex]);
-        translate([-ex, -r_cyl, -ex]) cube([r_cyl + 2*ex, r_cyl, l_cyl + 2*ex]);
-    }
 }
