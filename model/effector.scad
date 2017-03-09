@@ -3,12 +3,12 @@ include <configuration.scad>;
 separation = 40;  // Distance between ball joint mounting faces.
 offset = 20;  // Same as DELTA_EFFECTOR_OFFSET in Marlin.
 mount_radius = 12.5;  // Hotend mounting screws, standard would be 25mm.
-hotend_radius = 8.2;  //WAS 8 Hole for the hotend (J-Head diameter is 16mm).
+hotend_radius = 8.25;  //WAS 8 Hole for the hotend (J-Head diameter is 16mm).
 push_fit_height = 5.5;  //WAS 4 Length of brass threaded into printed plastic.
 height = 8;
 cone_r1 = 2.5;
 cone_r2 = 14;
-corr=0.1; // Correction for holes,  if your printer has perfect holes dimensioning, set to 0, otherwise keep this value to get holes that are not too tight
+corr=0.15; // Correction for holes,  if your printer has perfect holes dimensioning, set to 0, otherwise keep this value to get holes that are not too tight
 
 module effector() {
   difference() {
@@ -37,7 +37,7 @@ module effector() {
     translate([0, 0, push_fit_height-height/2])
       cylinder(r=hotend_radius, h=height, $fn=36);
     //translate([0, 0, -6]) # import("m5_internal.stl");
-    translate([0, 0, -6]) cylinder(r=2.75, h=height, $fn=36); //Deltatron E3D update
+    translate([0, 0, -6]) cylinder(r=hotend_radius-1, h=height, $fn=36); //Deltatron E3D update
     for (a = [0:60:359]) rotate([0, 0, a]) {
       translate([0, mount_radius, 0])
 	cylinder(r=m3_wide_radius + corr, h=2*height, center=true, $fn=12);
