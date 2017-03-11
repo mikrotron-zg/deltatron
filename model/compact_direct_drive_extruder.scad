@@ -127,10 +127,10 @@ module frame_mount()
 	// settings
 	width = base_width;
 	length = base_length;
-	height = base_height;
+	height = base_height+1;
 	hole_offsets = [
-		[0,  length / 2 - 6, 2.5],
-		[0, -length / 2 + 6, 2.5]
+		[0,  length / 2 - 6, 3.5],
+		[0, -length / 2 + 6, 3.5]
 	];
 	corner_radius = 3;
 
