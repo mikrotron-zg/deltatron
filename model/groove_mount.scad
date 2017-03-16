@@ -9,7 +9,7 @@ m3_wide_radius=1.6;
 // Slot and lip for installation
 slot_radius = 6.25;
 lip_radius = 8.1;
-lip_thickness = 1.5;
+lip_thickness = 1.3;
 nut_trap=true; // Will generate M3 nut trap holes for installation if set to 'true'
 
 $fn = 40;
