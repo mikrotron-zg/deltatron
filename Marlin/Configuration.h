@@ -143,7 +143,7 @@
 // 147 is Pt100 with 4k7 pullup
 // 110 is Pt100 with 1k pullup (non standard)
 
-#define TEMP_SENSOR_0 6
+#define TEMP_SENSOR_0 5
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_BED 0
@@ -198,9 +198,9 @@
 
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 // Deltatron
-    #define  DEFAULT_Kp 25.93
-    #define  DEFAULT_Ki 1.86
-    #define  DEFAULT_Kd 90
+    #define  DEFAULT_Kp 22.92
+    #define  DEFAULT_Ki 1.67
+    #define  DEFAULT_Kd 79
 
 // Ultimaker
 //    #define  DEFAULT_Kp 22.2
@@ -448,9 +448,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   #endif // AUTO_BED_LEVELING_GRID
 
   // these are the offsets to the probe relative to the extruder tip (Hotend - Probe)
-  #define X_PROBE_OFFSET_FROM_EXTRUDER 11.5 
-  #define Y_PROBE_OFFSET_FROM_EXTRUDER -6.0 
-  #define Z_PROBE_OFFSET_FROM_EXTRUDER -4.6  //Increase this if the first layer is too thin.
+  #define X_PROBE_OFFSET_FROM_EXTRUDER 20.0 
+  #define Y_PROBE_OFFSET_FROM_EXTRUDER -12.2 
+  #define Z_PROBE_OFFSET_FROM_EXTRUDER -7.0  //Increase this if the first layer is too thin.
 
   #define Z_RAISE_BEFORE_HOMING 4       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
@@ -461,8 +461,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   #define Z_RAISE_BETWEEN_PROBINGS 5  //How much the extruder will be raised when traveling from between next probing points
 
   //positon of screw used for z-probe retraction
-  #define Z_PROBE_RETRACT_SCREW_X 90.0
-  #define Z_PROBE_RETRACT_SCREW_Y 9.5
+  #define Z_PROBE_RETRACT_SCREW_X 84.5
+  #define Z_PROBE_RETRACT_SCREW_Y 14.8
   #define Z_PROBE_RETRACT_SCREW_Z 30.0
 
   #define Z_PROBE_RETRACT_DOWN 23.0 // (in mm) how much to move down to retract the probe  
@@ -504,7 +504,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 // For deltabots this means top and center of the Cartesian print volume.
 #define MANUAL_X_HOME_POS 0
 #define MANUAL_Y_HOME_POS 0
-#define MANUAL_Z_HOME_POS 234  // For delta: Distance between nozzle and print surface after homing.
+#define MANUAL_Z_HOME_POS 224  // For delta: Distance between nozzle and print surface after homing.
 
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
