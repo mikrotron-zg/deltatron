@@ -1,0 +1,100 @@
+[print]
+name = deltatron
+defaultQuality = tdQCyYCEb4dL2T8PCuWIpubDaTNhnK9x
+travelSpeedMin = 130
+travelSpeedMax = 150
+firstLayerSpeedMin = 20
+firstLayerSpeedMax = 30
+infillSpeedMin = 60
+infillSpeedMax = 100
+skinSpeedMin = 30
+skinSpeedMax = 60
+infillType = 0
+innerPerimeterMin = 60
+innerPerimeterMax = 80
+outerPerimeterMin = 40
+outerPerimeterMax = 60
+printSpeedMin = 60
+printSpeedMax = 90
+nozzleDiameter = 0.37
+gcodeFlavour = 0
+retractionCombing = True
+combing = 1
+multiVolumeOverlap = 0
+cutOffObjectBottom = 0
+shellThickness = 1.2
+infillTopBottomThickness = 0.6
+infillDensityPercent = 20
+supportType = 0
+platformAdhesion = 0
+dualExtrusion = 0
+wipeAndPrimeTower = True
+oozeShield = False
+enableRetraction = True
+retractionSpeed = 90
+retractionDistance = 8
+multiExtruderSwitchAmount = 16
+startGCode = """
+; Activate all used extruder
+{IF_EXT0}M104 T0 S{TEMP0}
+
+G28 ; home all axes
+G29 ; bed autoleveling
+G1 X0 Y50 Z0.1 F2000 ; park nozzle
+M107 ; Turn off fan
+G90 ; Absolute positioning
+M82 ; Extruder in absolute mode
+{IF_BED}M190 S{BED}
+G92 E0 ; Reset extruder position
+; Wait for all used extruders to reach temperature
+{IF_EXT0}M109 T0 S{TEMP0}
+"""
+endGCode = """
+M104 S0 ; turn off temperature
+G28  ; home all axes
+M84     ; disable motors
+"""
+preSwitchExtruderCode = 
+postSwitchExtruderCode = 
+wipeAndPrimeTowerVolume = 15
+retractionMinimumTravel = 2
+minimumExtrusionBeforeRetract = 0.02
+zhop = 2
+skirtLineCount = 3
+skirtDistance = 5
+skirtMinimumLength = 150
+solidInfillTop = True
+solidInfillBottom = True
+infillOverlapPercent = 20
+supportStructureType = 0
+supportOverhang = 60
+supportFillPercent = 15
+supportDistanceXY = 0.7
+supportDistanceZ = 0.15
+supportExtruder = -1
+spiralizeOuterContour = False
+brimWidth = 10
+raftExtraMargin = 5
+raftLineSpacing = 1
+raftBaseThickness = 0.3
+raftBaseWidth = 0.7
+raftInterfaceThickness = 0.2
+raftInterfaceLineWidth = 0.2
+raftAirGap = 0
+raftAirGapLayer0 = 0
+raftSurfaceLayer = 1
+fixCombineEverythingA = True
+fixCombineEverythingB = False
+fixKeepOpenFaces = False
+fixExtensiveStitching = False
+fanFullAtHeight = 0.7
+perimeterBeforeInfill = True
+minimumSpeed = 10
+coolHeadLift = False
+numQuality = 1
+[quality_0]
+name = 0.2 mm
+signature = tdQCyYCEb4dL2T8PCuWIpubDaTNhnK9x
+layerHeight = 0.2
+layer0widthPercent = 150
+firstLayerHeight = 0.3
