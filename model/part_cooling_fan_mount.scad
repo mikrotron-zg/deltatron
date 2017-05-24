@@ -3,7 +3,7 @@
 use <chamfers.scad>;
 
 fan_dimension = 40; // for 40x40 mm fan
-fan_height = 10; // most common, can be 7 or 12 mm
+fan_height = 7; // most common, can be 7 or 12 mm
 fan_mount_hole_dia = 3.6; // diameter of corner mount holes
 fan_mount_hole_offset = 3.9; // distance from center of mounthole to fan edge
 fan_diameter = 38.2; 
@@ -66,9 +66,9 @@ module fan_duct(){
         cube([10, fan_dimension/2, base_mount_height/2], center=true);
     translate([-5, 3/4*fan_dimension, base_mount_height]) rotate([90, 180, 0])   
         chamfer(fan_dimension/2, base_mount_height/2,rs=10);
-    translate([-10, fan_dimension/4 - 1, 0]) cube([10, 1, base_mount_height]);
-    translate([-10, 3*fan_dimension/4, 0]) cube([10, 1, base_mount_height]);
-    translate([-11, fan_dimension/4 - 1, 0]) cube([1, fan_dimension/2 + 2, base_mount_height]);
+    translate([-10, fan_dimension/4 - 1, 0]) cube([10, 1, base_mount_height +fan_height]);
+    translate([-10, 3*fan_dimension/4, 0]) cube([10, 1, base_mount_height+fan_height]);
+    translate([-11, fan_dimension/4 - 1, 0]) cube([1, fan_dimension/2 + 2, base_mount_height+fan_height]);
 }
 
 module fan(){
