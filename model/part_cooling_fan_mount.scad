@@ -62,13 +62,16 @@ module base_mount(){
 }
 
 module fan_duct(){
-    translate([-5, fan_dimension/2, base_mount_height/4])
-        cube([10, fan_dimension/2, base_mount_height/2], center=true);
-    translate([-5, 3/4*fan_dimension, base_mount_height]) rotate([90, 180, 0])   
+    add = 3.5; //added vertical dimension
+    translate([-10-add, fan_dimension/4, 0])
+        cube([10+add, fan_dimension/2, base_mount_height/2]);
+    translate([-5-add, 3/4*fan_dimension, base_mount_height]) rotate([90, 180, 0])   
         chamfer(fan_dimension/2, base_mount_height/2,rs=10);
-    translate([-10, fan_dimension/4 - 1, 0]) cube([10, 1, base_mount_height +fan_height]);
-    translate([-10, 3*fan_dimension/4, 0]) cube([10, 1, base_mount_height+fan_height]);
-    translate([-11, fan_dimension/4 - 1, 0]) cube([1, fan_dimension/2 + 2, base_mount_height+fan_height]);
+    translate([-10-add, fan_dimension/4 - 1, 0]) cube([10+add, 1, base_mount_height+fan_height/2]);
+    translate([-10-add, 3*fan_dimension/4, 0]) cube([10+add, 1, base_mount_height+fan_height/2]);
+    translate([-11-add, fan_dimension/4 - 1, 0]) cube([1, fan_dimension/2 + 2, base_mount_height+fan_height/2]);
+    translate([-5-add, fan_dimension/4-1, base_mount_height+fan_height/2-1])
+        cube([5+add, fan_dimension/2+2, 1]);
 }
 
 module fan(){
