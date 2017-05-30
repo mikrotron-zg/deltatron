@@ -17,7 +17,7 @@ fan_duct_width = fan_dimension/3;
 fan_duct_height = base_chamber_height/2;
 
 arm_width = 8;
-arm_length = 33; // how long is horizontal part of arm (when mounted)
+arm_length = 30; // how long is horizontal part of arm (when mounted) WAS 33
 arm_height = 12; // how long is vertical part of arm (when mounted)
 arm_thickness = 6;
 arm_mount_hole_dia = 6.2; // M3 bolt head diameter
@@ -30,12 +30,13 @@ part_cooling_fan_mount();
 translate([0, 0, base_mount_height]) %fan();
 
 module part_cooling_fan_mount(){
-    rotate([180,0,0]) translate([0, -fan_dimension, -base_mount_height])
-    difference(){
-        base_mount();
-        translate([-ex, fan_dimension/2, 0]) cube([15, fan_dimension/2, base_mount_height], center=true);
-    }
-    fan_duct();
+    //rotate([180,0,0]) translate([0, -fan_dimension, -base_mount_height])
+    //difference(){
+//        base_mount();
+//        translate([-ex, fan_dimension/2, 0]) cube([15, fan_dimension/2, base_mount_height], center=true);
+//    }
+    //fan_duct();
+    base_mount2();
     translate([fan_dimension, fan_dimension/2 - arm_width/2, 0]) arm();
 }
 
@@ -59,6 +60,31 @@ module base_mount(){
      } //difference
      translate([fan_dimension/2, fan_dimension/2, -ex])
         cylinder_chamfer(fan_diameter/2,base_chamber_height,rs=20);
+}
+
+module base_mount2(){
+    rot_ang=-15; //rotation angle of fan
+    difference(){
+        translate([fan_dimension*3/4,0,0]) 
+            rounded_rect(fan_dimension/4, fan_dimension, arm_thickness, rounding_radius);
+        translate([fan_dimension/2, fan_dimension/2, -ex]){
+            for (i = [45 : 90 : 315]) {
+                translate([dr*sin(i), dr*cos(i), -0.5]){
+                    // add M3 mount hole
+                    rotate([0,rot_ang,0])
+                    cylinder(d = fan_mount_hole_dia, h = base_mount_height + 1, $fn=30);
+                    // add M3 nut trap
+                    translate([0,0,-0.5])
+                        rotate([0,rot_ang,0])
+                        cylinder(r=5.5 / 2 / cos(180 / 6) + 0.05, h=2.5 + 2*ex, $fn=6);
+                }
+            }
+            cylinder(d = fan_diameter, h = base_chamber_height, $fn = 100);
+        }
+        translate([fan_dimension*3/4,0,arm_thickness-3])
+            rotate([0,rot_ang,0])
+            cube([fan_dimension/4+1, fan_dimension, arm_thickness]);
+    }//difference
 }
 
 module fan_duct(){
