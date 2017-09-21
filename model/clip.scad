@@ -28,7 +28,7 @@ module hook(x=10){
         clip();
         translate([-5, plate_thickness, 0]) {
             r=5;
-            s=2;
+            s=3;
             cube([plate_thickness, s, x]);
             translate([r, s, 0]) difference(){
                 cylinder(r=r, h=x);

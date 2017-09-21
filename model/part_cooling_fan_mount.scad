@@ -17,8 +17,8 @@ fan_duct_width = fan_dimension/3;
 fan_duct_height = base_chamber_height/2;
 
 arm_width = 8;
-arm_length = 30; // how long is horizontal part of arm (when mounted) WAS 33
-arm_height = 17; // how long is vertical part of arm (when mounted)
+arm_length = 30; // how long is horizontal part of arm (when mounted)
+arm_height = 22; // how long is vertical part of arm (when mounted) WAS 17
 arm_thickness = 6;
 arm_mount_hole_dia = 6.2; // M3 bolt head diameter
 arm_mount_hole_height = 3.2; // M3 bolt hole height
