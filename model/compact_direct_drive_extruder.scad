@@ -48,9 +48,9 @@ base_height = 5;
 // nema 17 dimensions
 nema17_width = 42.3;
 nema17_hole_offsets = [
-	[-15.5, -15.5, 1.5],
-	[-15.5,  15.5, 1.5],
-	[ 15.5, -15.5, 1.5],
+	[-15.5, -15.5, 2],
+	[-15.5,  15.5, 2],
+	[ 15.5, -15.5, 2],
 	[ 15.5,  15.5, 1.5 + base_height]
 ];
 
@@ -541,5 +541,5 @@ compact_extruder();
 //translate([20, 0, 0])
 //	idler_608_v1();
 
-//translate([20, 0, 0])
-//	idler_608_v2_splitted();
+translate([20, 0, 0])
+	idler_608_v2_splitted();
