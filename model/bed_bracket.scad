@@ -26,18 +26,19 @@ bracket_thickness = 2.5;
 
 // ENTRY POINT
 
-translate([0, 0, bracket_width]) rotate([0, -90, 0]) bed_bracket();
+bed_bracket();
 
 module bed_bracket(){
-    translate([-bed_dia/2, 0, -profile]) %frame();
-    difference(){
-        translate([-bracket_width, profile, 0]) draw_bracket();
-        translate([0, -bed_dia/2 + bed_overlap, bracket_thickness]) 
-            glass_bed(bed_dia,4);
-        translate([0, -bed_dia/2, -ex]) 
-            glass_bed(bed_dia2, bracket_thickness + 2*ex);
+    translate([0, 0, bracket_width]) rotate([0, -90, 0]) {
+        translate([-bed_dia/2, 0, -profile]) %frame();
+        difference(){
+            translate([-bracket_width, profile, 0]) draw_bracket();
+            translate([0, -bed_dia/2 + bed_overlap, bracket_thickness]) 
+                glass_bed(bed_dia,4);
+            translate([0, -bed_dia/2, -ex]) 
+                glass_bed(bed_dia2, bracket_thickness + 2*ex);
+        }
     }
-
 }
 
 module draw_bracket(){
