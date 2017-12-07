@@ -33,7 +33,7 @@
 #define SERIAL_PORT 0
 
 // This determines the communication speed of the printer
-#define BAUDRATE 250000
+#define BAUDRATE 250000 //Windows 250000, Linux 115200
 
 // This enables the serial port associated to the Bluetooth interface
 //#define BTENABLED              // Enable BT interface on AT90USB devices
@@ -75,7 +75,7 @@
 #define DELTA_SEGMENTS_PER_SECOND 160
 
 // Center-to-center distance of the holes in the diagonal push rods.
-#define DELTA_DIAGONAL_ROD 228 // mm
+#define DELTA_DIAGONAL_ROD 228.0 // mm
 
 // Horizontal offset from middle of printer to smooth rod center.
 #define DELTA_SMOOTH_ROD_OFFSET 163.33 // mm
@@ -84,7 +84,7 @@
 #define DELTA_EFFECTOR_OFFSET 30.0 // mm
 
 // Horizontal offset of the universal joints on the carriages.
-#define DELTA_CARRIAGE_OFFSET 26.75 // mm WAS 30.0
+#define DELTA_CARRIAGE_OFFSET 26.0 // mm WAS 30.0, 26.75
 
 // Horizontal distance bridged by diagonal push rods when effector is centered.
 #define DELTA_RADIUS (DELTA_SMOOTH_ROD_OFFSET-DELTA_EFFECTOR_OFFSET-DELTA_CARRIAGE_OFFSET)
@@ -143,7 +143,7 @@
 // 147 is Pt100 with 4k7 pullup
 // 110 is Pt100 with 1k pullup (non standard)
 
-#define TEMP_SENSOR_0 6
+#define TEMP_SENSOR_0 5
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_BED 0
@@ -198,9 +198,9 @@
 
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 // Deltatron
-    #define  DEFAULT_Kp 25.93
-    #define  DEFAULT_Ki 1.86
-    #define  DEFAULT_Kd 90
+    #define  DEFAULT_Kp 22.92
+    #define  DEFAULT_Ki 1.67
+    #define  DEFAULT_Kd 79
 
 // Ultimaker
 //    #define  DEFAULT_Kp 22.2
@@ -424,7 +424,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
     #define FRONT_PROBE_BED_POSITION -DELTA_PROBABLE_RADIUS
 
     // probe at the points of a lattice grid
-    #define AUTO_BED_LEVELING_GRID_POINTS 5
+    #define AUTO_BED_LEVELING_GRID_POINTS 7
     #define AUTO_BED_LEVELING_GRID_X ((RIGHT_PROBE_BED_POSITION - LEFT_PROBE_BED_POSITION) / (AUTO_BED_LEVELING_GRID_POINTS - 1))
     #define AUTO_BED_LEVELING_GRID_Y ((BACK_PROBE_BED_POSITION - FRONT_PROBE_BED_POSITION) / (AUTO_BED_LEVELING_GRID_POINTS - 1))
 
@@ -448,9 +448,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   #endif // AUTO_BED_LEVELING_GRID
 
   // these are the offsets to the probe relative to the extruder tip (Hotend - Probe)
-  #define X_PROBE_OFFSET_FROM_EXTRUDER 11.5 
-  #define Y_PROBE_OFFSET_FROM_EXTRUDER -6.0 
-  #define Z_PROBE_OFFSET_FROM_EXTRUDER -4.6  //Increase this if the first layer is too thin.
+  #define X_PROBE_OFFSET_FROM_EXTRUDER 20.0 
+  #define Y_PROBE_OFFSET_FROM_EXTRUDER -12.2 
+  #define Z_PROBE_OFFSET_FROM_EXTRUDER -7.15  //WAS 7.0 Increase this if the first layer is too thin.
 
   #define Z_RAISE_BEFORE_HOMING 4       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
@@ -461,9 +461,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   #define Z_RAISE_BETWEEN_PROBINGS 5  //How much the extruder will be raised when traveling from between next probing points
 
   //positon of screw used for z-probe retraction
-  #define Z_PROBE_RETRACT_SCREW_X 90.0
-  #define Z_PROBE_RETRACT_SCREW_Y 9.5
-  #define Z_PROBE_RETRACT_SCREW_Z 30.0
+  #define Z_PROBE_RETRACT_SCREW_X 82.5
+  #define Z_PROBE_RETRACT_SCREW_Y 16.5
+  #define Z_PROBE_RETRACT_SCREW_Z 36.0 
 
   #define Z_PROBE_RETRACT_DOWN 23.0 // (in mm) how much to move down to retract the probe  
   
@@ -504,7 +504,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 // For deltabots this means top and center of the Cartesian print volume.
 #define MANUAL_X_HOME_POS 0
 #define MANUAL_Y_HOME_POS 0
-#define MANUAL_Z_HOME_POS 234  // For delta: Distance between nozzle and print surface after homing.
+#define MANUAL_Z_HOME_POS 230  //For delta: Distance between nozzle and print surface after homing.
 
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
@@ -519,7 +519,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #define XYZ_PULLEY_TEETH 16
 #define XYZ_STEPS (XYZ_FULL_STEPS_PER_ROTATION * XYZ_MICROSTEPS / double(XYZ_BELT_PITCH) / double(XYZ_PULLEY_TEETH))
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {XYZ_STEPS, XYZ_STEPS, XYZ_STEPS, 155}   //E WAS 152.3, 145, 150, 152.5
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {XYZ_STEPS, XYZ_STEPS, XYZ_STEPS, 155}   //E WAS 130
 #define DEFAULT_MAX_FEEDRATE          {200, 200, 200, 200}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {9000,9000,9000,9000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 

@@ -1,0 +1,10 @@
+[filament]
+name = deltatron_PLA
+diameter = 1.75
+multiplierPercent = 100
+printingTemperature = 225
+enableCooling = True
+bedTemperature = 0
+fanSpeedMin = 75
+fanSpeedMax = 100
+minimalLayerTime = 10
