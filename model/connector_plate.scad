@@ -42,6 +42,11 @@ widthUSBpart=usbFullWidth+switchOuterLength+3.5*overlap+2*mountWidth+roundingRad
 widthPowerPart=powerWidth+overlap+1.5*mountWidth+roundingRadius;
 thickness=2;
 
+//support settings
+support = true; // include support
+support_wall = 0.3; // support wall thickness
+support_gap = 0.3; // gap between support and model
+support_brim = 5; // brim to fix thin support walls
 
 // ENTRY POINT
 
@@ -49,7 +54,10 @@ draw();
 
 module draw(){
     drawUSBpart();
-    translate([widthUSBpart*1.25, 0, 0]) drawPowerPart();
+    translate([widthUSBpart*1.25, 0, 0]){
+        drawPowerPart();
+        if (support) power_supports();
+    }
     %translate([0, 0, thickness]) cube([200, 15, 15]);
     %translate([0, 30, thickness]) cube([200, 15, 15]);
 //      clamp();
@@ -157,6 +165,30 @@ module clampClip(clipWidth=3, clipHeight=0.35){
         translate ([0-ex, 0, 0]) cube([clampWidth+2*ex, clampWidth, profile]);
     }
 //    translate([0, -clipHeight, profile/2-clipWidth/2]) rotate([-atan(clipHeight/clipWidth),0,0]) cube([clampWidth, clipHeight, clipWidth]);
+}
+
+
+// SUPPORTS
+
+module power_supports(){
+    power_part_support();
+}
+
+module power_part_support(){
+    
+    difference(){
+        union(){
+            cube([overlap - support_gap, 3*profile, support_wall]);
+            for (i = [0 : 5*support_wall : overlap])
+                translate([i, 0, 0])
+                    cube([support_wall, 3*profile, thickness/2 - support_gap]);
+            for (i = [0 : 3*support_wall : 3*profile])
+                translate([0, i, 0])
+                    cube([overlap - support_gap, support_wall, thickness/2 - support_gap]);
+        }
+        translate([-ex, height/2-powerHeight/2, -ex])
+            cube([powerWidth-powerRadius+ex, powerHeight, thickness+2*ex]);
+    }
 }
 
 // UTILITY
